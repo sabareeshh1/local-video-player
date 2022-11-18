@@ -1,0 +1,23 @@
+name: youtube_player_example
+description: Demonstrates how to use the youtube_player plugin.
+publish_to: 'none'
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  youtube_player:
+    path: ../
+
+flutter:
+
+
+  uses-material-design: true
+

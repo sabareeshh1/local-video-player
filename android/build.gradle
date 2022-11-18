@@ -1,0 +1,57 @@
+gradle.buildFinished { buildResult ->
+    if (buildResult.failure && !rootProject.ext.has(ANDROIDX_WARNING)) {
+        println '         *********************************************************'
+        println 'WARNING: This version of youtube_player will break your Android build if it or its dependencies aren\'t compatible with AndroidX.'
+        println '         See https://goo.gl/CP92wY for more information on the problem and how to fix it.'
+        println '         This warning prints for all Android build failures. The real root cause of the error may be unrelated.'
+        println '         *********************************************************'
+        rootProject.ext.set(flutterPluginsAndroidXWarning, true)
+    }
+}
+
+group 'np.com.sarbagyastha.youtubeplayer'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    repositories {
+        google()
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.3.2'
+    }
+}
+
+rootProject.allprojects {
+    repositories {
+        google()
+        jcenter()
+        maven { url "https://jitpack.io" }
+    }
+}
+
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 28
+
+    defaultConfig {
+        minSdkVersion 16
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    lintOptions {
+        disable 'InvalidPackage'
+    }
+    android {
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+    dependencies {
+        implementation 'com.google.android.exoplayer:exoplayer-core:2.9.6'
+        implementation 'com.google.android.exoplayer:exoplayer-hls:2.9.6'
+        implementation 'com.github.sarbagyastha:android-youtubeExtractor:v2.3.0'
+    }
+}
